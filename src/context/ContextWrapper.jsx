@@ -1,97 +1,58 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ContextProvider } from './Context'
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { firebaseConfig } from '../firebase/Database/Database';
-// import { DataService } from '../firebase/Database/Database';
-
-import { Timestamp, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { DataService } from '../firebase/Database/Database';
+import { toast } from 'react-toastify';
 
 const ContextWrapper = ({ children }) => {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
   const [mode, setMode] = useState('light')
   const [isLoading, setIsLoading] = useState(false)
+  // remove update product container
+  const [showRemoveContainer, setShowRemoveContainer] = useState(false)
+  const [product, setProduct] = useState([]);
+  // const [cartProduct, setCartProduct] = useState([]);
+
+  
   const toggleMode = () => {
     if (mode === 'light') {
       setMode('dark')
-      document.body.style.backgroundColor = '#6b7280'
+      document.body.style.backgroundColor = '#2D3748'
     } else {
       setMode('light')
       document.body.style.backgroundColor = '#fff'
     }
   }
-  const [products, setProducts] = useState({
-    title: null,
-    price: null,
-    imageUrl: null,
-    category: null,
-    description: null,
-    time: Timestamp.now(),
-    date: new Date().toLocaleString(
-      "en-US",
-      {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      }
-    )
+  const user = JSON.parse(localStorage.getItem('user'))
 
-  })
 
-  const addProduct = async () => {
-
-    if (products.title == null || products.price == null || products.imageUrl == null || products.category == null || products.description == null) {
-      return toast.error('Please fill all fields')
-    }
-    const productRef = collection(db, "products")
-    setIsLoading(true)
-    try {
-      await addDoc(productRef, products)
-      toast.success("Product Add successfully")
-      getProductData()
-      closeModal()
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error)
-      setIsLoading(false)
-    }
-    setProducts("")
-  }
-
-  const [product, setProduct] = useState([]);
-
-  // ****** get product
+  // ****** get product from database--------------------
+  
+  
   const getProductData = async () => {
     setIsLoading(true)
     try {
-      const q = query(
-        collection(db, "products"),
-        orderBy("time"),
-        // limit(5)
-      );
-      const data = onSnapshot(q, (QuerySnapshot) => {
-        let productsArray = [];
-        QuerySnapshot.forEach((doc) => {
-          productsArray.push({ ...doc.data(), id: doc.id });
-        });
-        setProduct(productsArray)
-        setIsLoading(false);
-      });
-      return () => data;
+      await DataService.getProductFromDatabase()
+      setIsLoading(false);
     } catch (error) {
-      console.log(error)
+      toast.error("Error while fetching product From database", {
+        autoClose: 800,
+      })
       setIsLoading(false)
     }
   }
-
+  
+  //--------------------------------------------------
+  
+  // --------when this component mount it call the getProductData()---
   useEffect(() => {
     getProductData();
+    setProduct(JSON.parse(localStorage.getItem('products')))
+
   }, []);
 
+  // -----------------------------------------------------------------
 
   return (
-    <ContextProvider value={{ mode, toggleMode, isLoading, setIsLoading, products, setProducts,addProduct }}>
+    <ContextProvider value={{ mode, toggleMode, isLoading,user, setIsLoading, product, setProduct, getProductData, showRemoveContainer, setShowRemoveContainer }}>
       {children}
     </ContextProvider>
   )

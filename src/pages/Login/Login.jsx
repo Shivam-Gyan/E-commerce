@@ -7,9 +7,12 @@ import Input from '../../components/Input/Input'
 import { authServices } from '../../firebase/authentication/authService';
 import { useNavigate } from 'react-router';
 import Structure from '../../components/Structure';
+import { useDispatch } from 'react-redux';
+import { fetchCart } from '../../redux/CartSlice';
 
 const Login = () => {
     const { mode, isLoading, setIsLoading } = useContextState()
+    const dispatch=useDispatch()
     const navigate = useNavigate()
     const [value, setValue] = useState({
         email: "",
@@ -30,16 +33,17 @@ const Login = () => {
                 setIsLoading(true)
                 const data = await authServices.login({ email: value?.email, password: value?.password })
                 localStorage.setItem('user', JSON.stringify(data))
+                await dispatch(fetchCart(data.uid))
                 toast.success("Login successful",
                     {
                         position: "top-right",
                         autoClose: 3000,
+                        theme: mode === "dark" ? "dark" : "light",
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: false,
                         draggable: true,
                         progress: undefined,
-                        theme: mode === "dark" ? "dark" : "light",
                     })
                 setIsLoading(false)
                 navigate('/')
@@ -67,7 +71,7 @@ const Login = () => {
                 <div className={`mx-4 sm:mx-0  flex flex-col text-slate-900 px-6 py-[0.88vw] bg-slate-300`}>
                     <div className='py-2 relative'>
                         <Input label="Email" text="email" placeholder="Enter email" className=" w-full border-b-2 px-2 py-1 border-slate-900 bg-transparent block mb-6 outline-none"
-                            value={value?.name} onChange={(e) => setValue(prev => ({ ...prev, email: e.target.value }))}
+                            value={value?.email} onChange={(e) => setValue(prev => ({ ...prev, email: e.target.value }))}
                         />
                         <Input label="Password" text="password" type="password" placeholder="Enter password" className=" w-full px-2 py-2 bg-transparent outline-none block border-slate-900 border-b-2 mb-4"
                             value={value?.password} onChange={(e) => setValue(prev => ({ ...prev, password: e.target.value }))}

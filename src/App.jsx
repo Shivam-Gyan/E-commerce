@@ -26,6 +26,7 @@ import Users from './pages/admin/adminPages/Users'
 import Products from './pages/admin/adminPages/Products'
 import OtherInfo from './pages/admin/adminPages/OtherInfo';
 import Orders from './pages/admin/adminPages/Orders'
+import UserProfile from './components/userProfile/UserProfile';
 
 const App = () => {
 
@@ -36,18 +37,15 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/order' element={
-              <ProtectedUser>
-                <Order />
-              </ProtectedUser>} />
-            <Route path='/Cart' element={<Cart />} />
+            <Route path='/userprofile' element={<ProtectedUser><UserProfile /></ProtectedUser>} />
+            <Route path='/login' element={<ProtectedRouting><Login /></ProtectedRouting>} />
+            <Route path='/signup' element={<ProtectedRouting><Signup /></ProtectedRouting>} />
+            <Route path='/order' element={<ProtectedUser><Order /></ProtectedUser>} />
 
-            <Route path='/dashboard/' element={
-              <ProtectedAdmin>
-                <Dashboard></Dashboard>
-              </ProtectedAdmin>
+              {/* cart */}
+            <Route path='/Cart' element={<ProtectedUser><Cart /></ProtectedUser>} />
+
+            <Route path='/dashboard' element={<ProtectedAdmin><Dashboard/></ProtectedAdmin>
             }>
               <Route path='/dashboard/Users' element={<Users />} />
               <Route path='/dashboard/Orders' element={<Orders />} />
@@ -55,7 +53,7 @@ const App = () => {
               <Route path='/dashboard/Other-info' element={<OtherInfo />} />
             </Route>
 
-            <Route path="/productinfo/:id" element={<ProductInfo />} />
+            <Route path="/productinfo/:id/:productname" element={<ProductInfo />} />
             <Route path='/*' element={<NoPage />} />
           </Route>
         </Routes>
@@ -75,6 +73,12 @@ const ProtectedAdmin = ({ children }) => {
   if (user?.email === "shivamgupta12a@gmail.com") { return children; }
   else { return <Navigate to={'/login'} />; }
 }
+const ProtectedRouting = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (!user) { return children; }
+  else { return <Navigate to={'/'} />; }
+}
+
 
 // 
 const ProtectedUser = ({ children }) => {

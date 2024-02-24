@@ -4,8 +4,10 @@ import { FaBoxArchive } from "react-icons/fa6";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { RiCoinsLine } from "react-icons/ri";
+import { useContextState } from '../../../context/Context';
 
 const OtherInfo = () => {
+    const {product}=useContextState()
     return (
         <div className='w-full text-slate-800 font-semibold grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 overflow-auto pb-6 gap-2 ' style={{ scrollbarWidth: 'none' }}>
             <div className='  w-full flex gap-2 justify-center items-center'>
@@ -24,7 +26,7 @@ const OtherInfo = () => {
                 <Link to={'/dashboard/Products'} className='w-1/2  px-8 py-6 hover:bg-blue-300 rounded-lg bg-gray-200 flex flex-col justify-center items-center'>
                     <MdProductionQuantityLimits size={100} className=' text-slate-800' />
                     <p className='text-lg font-bold text-slate-800 truncate'> Products</p>
-                    <h1 >20</h1>
+                    <h1 >{product?product.length:0}</h1>
                 </Link>
                 <div to={''} className='w-1/2 px-8 py-6 hover:bg-blue-300 rounded-lg bg-gray-200 flex flex-col justify-center items-center'>
                     <RiCoinsLine size={100} className=' text-slate-800' />

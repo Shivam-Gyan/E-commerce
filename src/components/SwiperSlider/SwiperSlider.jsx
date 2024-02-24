@@ -42,7 +42,7 @@ const SwiperSlider = ({ offers,Mobileoffers, autoSlide = false, autoSlideInterva
       }, []);
 
     return (
-        <div className="z-30 mt-[60px] sm:mt-16 overflow-hidden relative"
+        <div className="z-30 overflow-hidden relative"
             onMouseEnter={enterHandler}
             onMouseLeave={leaveHandler}>
             <div

@@ -8,7 +8,7 @@ const Users = () => {
     <div className='mb-7 z-20 w-full text-center text-3xl overflow-x-auto' style={{scrollbarWidth: 'none' }}>
     <div className=" relative">
       <table className="table-auto w-full border-collapse">
-        <thead className='bg-[#443c68] text-[0.5rem]'>
+        <thead className='bg-[#443c68] sticky -top-[0.1rem] text-[0.5rem]'>
           <tr>
             <th className="px-[0.7rem] py-[0.6rem] text-sm sm:text-lg lg:text-lg">Name</th>
             <th className="px-[0.7rem] py-[0.6rem] text-sm sm:text-lg lg:text-lg">Email</th>

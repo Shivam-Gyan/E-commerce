@@ -5,5 +5,12 @@ export const store=configureStore({
     reducer:{
         cart:cartSliceReducer,
     },
-    devTools:true
+    devTools:true,
+    // middleware: (getDefaultMiddleware) =>
+    // getDefaultMiddleware({
+    //   thunk: {
+    //     extraArgument: myCustomApiService,
+    //   },
+    //   serializableCheck: false,
+    // }),
 })

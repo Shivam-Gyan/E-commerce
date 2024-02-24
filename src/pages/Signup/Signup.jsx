@@ -39,6 +39,7 @@ const Signup = () => {
                 setIsLoading(true)
                 await authServices.signup({ name: value?.name, email: value?.email, password: value?.password })
                 await DataService.addUserToDatabase({ ...value, time: Timestamp.now() })
+                
                 toast.success("Signup successful",
                     {
                         position: "top-right",
