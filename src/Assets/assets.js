@@ -58,32 +58,6 @@ export const Mobileoffers = [
 ]
 
 
-export const navbarItems = [
-    {
-        title: "ORACLE MART",
-        url: '/'
-    },
-    {
-        title: "All Products",
-        url: '/allproducts'
-    },
-    {
-        title: "Order",
-        url: '/order'
-    },
-    {
-        title: "Admin",
-        url: '/dashboard'
-    },
-    {
-        title: "Offer Zone",
-        url: '/offers'
-    },
-    {
-        title: "Acccount",
-        url: '/account'
-    },
-];
 
 
 

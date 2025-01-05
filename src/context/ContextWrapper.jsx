@@ -31,6 +31,7 @@ const ContextWrapper = ({ children }) => {
     setIsLoading(true)
     try {
       await DataService.getProductFromDatabase()
+      setProduct(JSON.parse(localStorage.getItem('products')))
       setIsLoading(false);
     } catch (error) {
       toast.error("Error while fetching product From database", {
@@ -45,7 +46,6 @@ const ContextWrapper = ({ children }) => {
   // --------when this component mount it call the getProductData()---
   useEffect(() => {
     getProductData();
-    setProduct(JSON.parse(localStorage.getItem('products')))
 
   }, []);
 

@@ -2,11 +2,48 @@ import React from 'react'
 import { useParams } from 'react-router'
 import { useContextState } from '../../context/Context';
 import { BsFillPatchCheckFill } from "react-icons/bs";
+import { useDispatch } from 'react-redux';
+import { addCart } from '../../redux/CartSlice';
+import { toast } from 'react-toastify';
+
 
 function ProductInfo() {
     const { product } = useContextState()
 
     const { id,productname } = useParams();
+
+    const { mode,setIsLoading, user } = useContextState()
+    const dispatch = useDispatch()
+
+    // add to cart 
+    const handleClick = async (item) => {
+        
+        setIsLoading(true)
+        try {
+            const addItem = {
+                id: item?.id,
+                title: item?.title,
+                price: item?.price,
+                description: item?.description,
+                date: new Date().getTime(),
+                imageUrl: item?.imageUrl,
+                quantity: 1
+            }
+            await dispatch(addCart({ userId:user.uid, addItem }))
+            toast.success("Item added to cart", {
+                position: "top-center",
+                autoClose: 500,
+                theme: mode === "dark" ? "dark" : "light",
+            })
+
+            setIsLoading(false)
+
+        } catch (error) {
+            toast.error('add to cart failed')
+            setIsLoading(false)
+        }
+    }
+
     return (
         <section className="text-gray-600 body-font overflow-hidden">
             {product?.map((item) => (
@@ -95,7 +132,7 @@ function ProductInfo() {
                                 <span className="title-font font-medium text-2xl text-gray-900">
                                     Rs.{item?.price}
                                 </span>
-                                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                                <button onClick={() => handleClick(item)} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                     Add To Cart
                                 </button>
                                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">

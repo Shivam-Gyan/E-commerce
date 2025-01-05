@@ -57,13 +57,6 @@ class Authentication {
         }
     }
 
-    // isAuthenticated() {
-    //     return this.currentUser;
-    // }
-
-    // getCurrentUser() {
-    //     return this.currentUser;
-    // }
 }
 
 // Example usage:

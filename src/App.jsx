@@ -20,7 +20,7 @@ import {
 
 } from './pages'
 import Layout from './components/Layout/Layout'
-import ContextWrapper from './context/ContextWrapper'
+import ContextWrapper from './context/ContextWrapper.jsx'
 import ProductInfo from './pages/productInfo/ProductInfo';
 import Users from './pages/admin/adminPages/Users'
 import Products from './pages/admin/adminPages/Products'

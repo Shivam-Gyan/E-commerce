@@ -71,7 +71,7 @@ const Cart = () => {
       amount: parseInt(grandTotal * 100),
       currency: "INR",
       order_receipt: 'order_rcptid_' + value.name,
-      name: "E-Bharat",
+      name: "Oracle Mart",
       description: "for testing purpose",
       handler: function (response) {
         // console.log(response)
@@ -154,7 +154,7 @@ const Cart = () => {
 
     <div className=' relative flex flex-col w-full h-[82vh] lg:h-[91vh]'>
       <div className=' py-1 border-b-[0.5px] border-gray-200 '>
-        <h1 className='w-full text-center text-3xl text-slate-800'>Shopping Cart</h1>
+        <h1 className='w-full text-center text-3xl text-slate-800 uppercase font-medium'>Shoping Cart</h1>
       </div>
       <div className='py-2 px-3 md:px-8 lg:px-28 overflow-hidden'>
 
@@ -237,8 +237,8 @@ const Cart = () => {
                 <RiLogoutBoxRLine />
               </button>
               <div className='flex justify-center   text-white font-medium '>
-                <input type="text" placeholder='Enter promo code ' className=' text-slate-900 text-start outline-none border-2 border-gray-400 px-4 py-2' />
-                <span onClick={handleDiscount} className='px-3 py-2 bg-slate-800 font-medium '>Discount</span>
+                <input type="text" placeholder='Enter promo code ' className=' text-slate-900 uppercase text-start outline-none border-2 border-gray-400 px-4 py-2' />
+                <span onClick={handleDiscount} className='px-3 cursor-pointer py-2 bg-slate-800 font-medium '>Discount</span>
               </div>
             </div>
             <div onClick={() => naviagte(-1)} className='text-gray-400 cursor-pointer font-medium flex gap-3 items-center'>

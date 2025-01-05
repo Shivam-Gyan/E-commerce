@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
 import { useContextState } from '../../context/Context';
-import { FaSun } from "react-icons/fa";
-import { WiMoonAltNew } from "react-icons/wi";
+// import { FaSun } from "react-icons/fa";
+// import { WiMoonAltNew } from "react-icons/wi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaPlus } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
@@ -15,7 +15,7 @@ import { fetchCart } from '../../redux/CartSlice';
 const Navbar = () => {
   const cartItem = useSelector(state => state.cart.carts)
   const dispatch = useDispatch()
-  const { mode, toggleMode } = useContextState();
+  const { mode, toggleMode,getProductData } = useContextState();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'))
@@ -24,6 +24,7 @@ const Navbar = () => {
   useEffect(() => {
     if (user) dispatch(fetchCart(user?.uid))
 
+    getProductData();
     window.addEventListener('resize',
       () => setWindowWidth(window.innerWidth));
 
@@ -45,20 +46,20 @@ const Navbar = () => {
 
       {/* checking width and then displaying all NavLinks  */}
       {windowWidth > 900 && (
-        <div className={` sm:ml-10 flex gap-4  ${mode === 'dark' ? "text-white" : "text-black"}`}>
-          <NavLink to='/allproduct' className={({ isActive }) => `font-semibold text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
+        <div className={` sm:ml-10 flex gap-5  ${mode === 'dark' ? "text-white" : "text-black"}`}>
+          <NavLink to='/allproduct' className={({ isActive }) => `uppercase tracking-wide font-medium  text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
             All Product
           </NavLink>
-          <NavLink to='/order' className={({ isActive }) => `font-semibold text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
+          <NavLink to='/order' className={({ isActive }) => `uppercase tracking-wide font-medium  text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
             Order
           </NavLink>
 
           {user?.email === "shivamgupta12a@gmail.com" ?
-            <NavLink to='/dashboard' className={({ isActive }) => `font-semibold text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
+            <NavLink to='/dashboard' className={({ isActive }) => `uppercase tracking-wide font-medium  text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
               Admin
             </NavLink> : null}
 
-          <NavLink to='/offerzone' className={({ isActive }) => `font-semibold text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
+          <NavLink to='/offerzone' className={({ isActive }) => `uppercase tracking-wide font-medium text-sm hover:text-gray-300 ${isActive ? "text-blue-500" : ""}`}>
             Offer Zone
           </NavLink>
         </div>
@@ -120,16 +121,16 @@ const Navbar = () => {
 
                 {/* NavLinks are here */}
 
-                <NavLink to='/allproduct' className={({ isActive }) => ` block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`} >
+                <NavLink to='/allproduct' className={({ isActive }) => `uppercase block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`} >
                   All Product
                 </NavLink>
-                <NavLink to='/order' className={({ isActive }) => ` block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`}>
+                <NavLink to='/order' className={({ isActive }) => ` uppercase block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`}>
                   Order
                 </NavLink>
-                {user?.email === "shivamgupta12a@gmail.com" ? <NavLink to='/dashboard' className={({ isActive }) => ` block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`}>
+                {user?.email === "shivamgupta12a@gmail.com" ? <NavLink to='/dashboard' className={({ isActive }) => ` uppercase block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`}>
                   Admin
                 </NavLink> : null}
-                <NavLink to='/offerzone' className={({ isActive }) => ` block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`}>
+                <NavLink to='/offerzone' className={({ isActive }) => ` uppercase  block min-w-full text-center px-10 py-2 text-white hover:bg-white  hover:text-slate-800 ${isActive ? "text-green-500" : ""}`}>
                   Offer Zone
                 </NavLink>
               </div>
