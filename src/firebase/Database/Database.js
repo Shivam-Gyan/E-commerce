@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, onSnapshot, updateDoc,doc,deleteDoc, query, collection, orderBy, getDocs } from "firebase/firestore";
 // import { addToCart } from "../../redux/CartSlice";
 export const firebaseConfig = {
-    apiKey: "AIzaSyDGUH6B5wgy6GwlX5MK_3dOjj4AFPzuEv0",
-    authDomain: "oracle-mart.firebaseapp.com",
-    projectId: "oracle-mart",
-    storageBucket: "oracle-mart.appspot.com",
-    messagingSenderId: "833874979001",
-    appId: "1:833874979001:web:8f085e01c6b21936211368",
-    measurementId: "G-FVYYWNTKYW"
-};
+    apiKey:import.meta.env.VITE_APIKEY,
+    authDomain: import.meta.env.VITE_AUTHDOMAIN,
+    projectId: import.meta.env.VITE_PROOJECTID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGE_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID
+  };
 
 
 class dataService {
